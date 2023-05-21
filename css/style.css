@@ -1,0 +1,322 @@
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans-Light.woff2') format('woff2'),
+         url('../fonts/JosefinSans-Light.woff') format('woff'),
+         url('../fonts/JosefinSans-Light.ttf') format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Alata';
+    src: url('../fonts/Alata-Regular.woff2') format('woff2'),
+         url('../fonts/Alata-Regular.woff') format('woff'),
+         url('../fonts/Alata-Regular.ttf') format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root{
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);
+    --dark-gray: hsl(0, 0%, 55%);
+    --very-dark-gray: hsl(0, 0%, 41%);
+    --pink:  hsl(317 100% 54%); 
+    --background-main:#0B040B; 
+    
+    --font-family-Alata: 'Alata', sans-serif;
+    --font-family-Josefin: 'Josefin Sans', sans-serif;
+    --font-size-paragraph: clamp(.9rem, 1vw + .5rem, 1.1rem);
+    --font-height-paragraph: clamp(1.5rem, 3vw + .5rem, 1.7rem);
+    --font-size-gallery: clamp(1.5rem, 3vw + .5rem, 2.1rem); 
+
+    --container-padding: 7em 0px;
+
+    --columns-card: repeat(8, 1fr);
+    --column-rows: repeat(8, 1fr);
+
+    font-family:var(--font-family-Josefin);
+    font-size: var(--font-size);
+    text-transform: uppercase;
+}
+
+*, ::before, ::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+} 
+
+img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container{
+    width: 90%;
+    height: 100%;
+    max-width: 1200px;
+    overflow: hidden;
+    margin: 0 auto; 
+    padding: var(--container-padding);
+}
+
+
+.title{
+    font-family: var(--font-family-Josefin);
+    font-size: clamp(2rem, 3vw + .5rem, 3.5rem);
+    line-height: clamp(2rem, 3vw + .5rem, 3.5rem);
+    font-weight: lighter;
+}
+
+
+.title__gallery{
+    font-size: clamp(2.2rem, 5vw + .5rem, 4rem);
+    line-height: clamp(2.2rem, 5vw + .5rem, 4rem);
+    width: max-content;
+    position: relative;
+}
+
+.title__gallery::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    background: #3837d0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: perspective(3em) rotateX(0deg) scale(2)  rotatey(10deg) translateX(-200px);
+    filter: blur(1em);
+    opacity: 0.7;
+}
+
+nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 87px;
+    z-index: 3;
+    transition: background-color 1s;
+}
+
+.nav--color{
+    background-color: #000000a3;
+    backdrop-filter: blur( 5.5px );
+    -webkit-backdrop-filter: blur( 5.5px );
+}
+
+.nav__container{
+    --container-padding: 2em 0 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav__logo{
+    width: min(200px, 50%);
+    cursor: pointer;
+}
+
+.nav__checkbox{
+    pointer-events: none;
+}
+
+.nav__checkbox:target{
+    pointer-events: unset;
+}
+
+.nav__checkbox--none{
+    display: none;
+}
+
+.nav__links{
+    position:absolute;
+    inset: 0px;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    align-content: center;
+    gap: 2em;
+    transition: 1s opacity;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    font-weight: bold;
+}
+
+.nav__checkbox:checked ~ .nav__links{
+    opacity: 1;
+    transform: unset;
+    pointer-events: unset;
+}
+
+.nav__checkbox:checked ~ .nav__links> .nav__link{
+    transform: unset;
+}
+
+.nav__link{
+    justify-content: center;
+    font-size: 1.3rem;
+    text-decoration: none;
+    color: var(--white);
+    display: flex;
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    transform: translate(100vw);
+    transition: transform 1s linear;
+}
+
+.nav__link:first-child{
+    margin-top: 87px;
+}
+
+.nav__link::after{
+    content: " ";
+    position: absolute;
+    width: 120px;
+    border-bottom: 2px solid var(--white);
+    bottom: 0;
+    transform: scale(0);
+    transition: transform .5s;
+}
+
+.nav__link:hover::after{
+    transform: scale(1);
+}
+
+.nav__menu{
+    display: grid;
+    cursor: pointer;
+    width: 23px;
+    height: 15px;
+    align-items: center;
+}
+
+.nav__icon{
+    width: 100%;
+    height: 100%;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    transition: transform .5s;
+    background-size: cover;
+}
+
+.nav__icon--hidden{
+    transform: scale(0);
+    transition: none;
+}
+
+.nav__checkbox:checked + .nav__menu .nav__icon--show{
+    transform: scale(0);
+    transition: .5s transform;
+}
+.nav__checkbox:checked + .nav__menu .nav__icon--hidden{
+    transform: scale(1) rotate(360deg);
+    transition: transform .5s .5s;
+}
+
+.nav__checkbox:not(:checked) + .nav__menu .nav__icon--show{
+    transform: scale(1);
+    transition: .5s transform;
+}
+
+.nav__background{
+    inset: 0;
+    position: absolute;
+    z-index: -1;
+    background-image: linear-gradient(145deg, #150517, #04011d);
+}
+
+/* header */
+
+header{
+    display: grid;
+    height: 100vh;
+    background-image: linear-gradient(90deg, #0000006c, #0000007e);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero__main{
+    position: absolute;
+    margin-top: 30vh;
+    width: 90%;
+    max-width: 1200px;
+}
+
+
+.hero__title{
+    font-weight: lighter;
+    border: 2px solid var(--white);
+    padding: clamp(.4em, .4em, .7em); 
+
+    line-height: clamp(2.5rem, 5vw + 1rem, 4.5rem); 
+    font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+    backdrop-filter: blur( 10px );
+    -webkit-backdrop-filter: blur(10px);
+    -moz-backdrop-filter: blur(10px);
+}
+
+.hero__picture{
+    z-index: -1;
+    height: 100vh;
+    width: 100vw;
+}
+
+@media (768px <= width) {
+
+    nav{
+        height: auto;
+    }
+    
+    .nav__menu{
+        display: none;
+    }
+        
+    .nav__links{
+        position: unset;
+        transform: unset;
+        opacity: unset;
+        width: max-content;
+        display: flex;
+        gap: 2em;
+        height: 100%;
+        pointer-events: all;
+        z-index: 1;
+    }
+
+    .nav__link{
+        transform: unset;
+        text-transform: none;
+    }
+
+    .nav__link:first-child{
+        margin-top: unset;
+    }
+
+    .nav__link::after{
+        width: 100%;
+        bottom: -10px;
+    }
+
+    .nav__background{
+        transform: scale(0);
+        display: none;
+    }
+
+    /* header */
+
+    .hero__title{
+        margin: unset;
+        margin-left: auto;
+        max-width: 650px;
+    }
+}
